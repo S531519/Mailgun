@@ -1,12 +1,12 @@
 router.post('/form', (req, res) => {
 
-  var api_key = '';
-  var domain = '';
+  var api_key = '';//Use your API Key
+  var domain = '';//Use your Domain
   var mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
   var filepath = path.join(__dirname,'test.jpg');
   var data = {
-    from: 'abc@xyz.com>',
-    to: '123@pqr.com',
+    from: 'abc@xyz.com',//Use your personal email ID
+    to: '123@pqr.com', // Use your destination ID
     subject: req.body.firstname + ' ' + req.body.lastname,
     html: `<html><h1>
 Contact Details

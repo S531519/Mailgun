@@ -1,0 +1,48 @@
+router.post('/form', (req, res) => {
+
+  var api_key = '';
+  var domain = '';
+  var mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
+  var filepath = path.join(__dirname,'test.jpg');
+  var data = {
+    from: 'abc@xyz.com>',
+    to: '123@pqr.com',
+    subject: req.body.firstname + ' ' + req.body.lastname,
+    html: `<html><h1>
+Contact Details
+</h1>
+
+<img width="100px" height="100px" src="cid:test.jpg">
+
+<table>
+<tr>
+    <td>FirstName: </td>
+    <td>${req.body.firstname}</td>
+</tr>
+<tr>
+    <td>Last Name:</td>
+    <td>${req.body.lastname}</td>
+</tr>
+<tr>
+    <td>Date of birth:</td>
+    <td>${req.body.dateofbirth}</td>
+</tr>
+<tr>
+    <td>Email:</td>
+    <td>${req.body.email}</td>
+</tr>
+<tr>
+    <td>Description:</td>
+    <td>${req.body.description}</td>
+</tr>
+</table> </html>`,
+inline: filepath
+  };
+
+  mailgun.messages().send(data, function (error, body) {
+  
+      console.log(body)
+      res.render('index', { title: 'Email Successfully sent'});
+  });
+  
+})
